@@ -1,0 +1,50 @@
+version: '3.8'
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: db_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p.123456
+    ports:
+      - '5432:5432'
+    networks:
+      - backend
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - 15432:80
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  person-client:
+    image: spf-msa-personas:latest
+    build:
+      context: ./spf-msa-personas
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
+  account-movements:
+    image: spf-msa-cuentas:latest
+    build:
+      context: ./spf-msa-cuentas
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
+    networks:
+      - backend

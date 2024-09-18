@@ -1,0 +1,35 @@
+server:
+  port: 8084
+  error:
+    include-message: always
+
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/db_test
+    username: postgres
+    password: p.123456
+    properties:
+      dialect: POSTGRES
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+    platform: postgres
+  data:
+    jpa:
+      show-sql: true
+    r2dbc:
+      repositories:
+        enabled: true
+
+client:
+  http-client:
+    baseUrl: http://localhost:8081/msclient/v1
+
+logging:
+  level:
+    org:
+      springframework: info
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parameters
+    org.springframework.data.r2dbc: DEBUG

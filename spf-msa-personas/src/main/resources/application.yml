@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spf-msa-personas
+  header:
+    channel: digital
+    medium: web
+  web-flux:
+    base-path: /msclient/v1
+  profiles:
+    active:
+      - development
+
+
+

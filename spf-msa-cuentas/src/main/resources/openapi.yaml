@@ -1,0 +1,373 @@
+openapi: 3.0.0
+info:
+  title: API Servicio Cuentas
+  description: Servicio de Cuentas
+  termsOfService: https://www.google.com
+  contact:
+    email: edwinl_s@hotmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/msaccount/v1
+    description: Generated server url
+tags:
+  - name: Cuentas
+    description: Cuentas
+  - name: Movimientos
+    description: Movimientos
+paths:
+  /cuentas:
+    get:
+      tags:
+        - Cuentas
+      summary: Consultar listado de cuentas activos
+      description: Consultar listado de cuentas activos
+      operationId: consultarCuentas
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CuentaDTO'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+    post:
+      tags:
+        - Cuentas
+      summary: Crear nueva cuenta
+      description: Crear nueva cuenta
+      operationId: crearCuenta
+      requestBody:
+        description: Cliente
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/CuentaDTO'
+        required: true
+      responses:
+        '201':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+  /cuentas/{id}:
+    get:
+      tags:
+        - Cuentas
+      summary: Consultar cuenta c id
+      description: Consultar cuenta x id
+      operationId: consultarxid
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/CuentaDTO'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+  /movimientos:
+    post:
+      tags:
+        - Movimiento
+      summary: Crear movmiento
+      description: Crear movmiento
+      operationId: crearMovmiento
+      requestBody:
+        description: Movimiento
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/MovimientoDTO'
+        required: true
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MovimientoDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+    get:
+      tags:
+        - Movimiento
+      summary: Consultar movmientos
+      description: Consultar movmientos
+      operationId: consultarMovientos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovimientoDTO'
+        '201':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MovimientoDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+
+  /movimientos/reporte:
+    get:
+      tags:
+        - Reportes
+      summary: Reportes movmientos
+      description: Reportes movmientos
+      operationId: reportesMovimientos
+      parameters:
+        - name: identifiacion
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: fechaDesde
+          in: query
+          required: true
+          schema:
+            type: date
+        - name: fechaHasta
+          in: query
+          required: true
+          schema:
+            type: date
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountStateReportDto'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+
+components:
+  schemas:
+    CuentaDTO:
+      required:
+        - idCliente
+        - numeroCuenta
+        - tipoCuenta
+        - saldoInicial
+        - estado
+      type: object
+      properties:
+        idCuenta:
+          type: integer
+        idCliente:
+          type: integer
+        numeroCuenta:
+          type: string
+        tipoCuenta:
+          type: string
+          enum:
+            - "A"
+            - "C"
+        saldoInicial:
+          type: number
+          example: 100
+        estado:
+          type: boolean
+      description: Modelo Canónico de Cliente
+    MovimientoDTO:
+      type: object
+      properties:
+        fecha:
+          type: string
+          format: date-time
+        tipoMovimiento:
+          type: string
+          enum:
+            - "R"
+            - "D"
+        valor:
+          type: number
+        saldo:
+          type: number
+        saldoInicial:
+          type: number
+        cuentaId:
+          type: integer
+    AccountStateReportDto:
+      type: object
+      properties:
+        fecha:
+          type: string
+          format: date-time
+        cliente:
+          type: string
+        numeroCuenta:
+          type: string
+        tipo:
+          type: string
+        saldoInicial:
+          type: number
+        estado:
+          type: boolean
+        movimiento:
+          type: number
+        saldoDisponible:
+          type: number
+    RespuestaDTO:
+      type: object
+      properties:
+        codigoRespuesta:
+          type: string
+        descripcion:
+          type: string
+      description: Modelo Canónico de Respuesta
+    ErrorBadRequest:
+      type: object
+      properties:
+        title:
+          maximum: 50
+          type: string
+          description: Technical error message.
+          example: Missing mandatory fields.
+        detail:
+          maximum: 50
+          type: string
+          description: Message to display to the client.
+          example: The input fields are not correct
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorList'
+        instance:
+          maximum: 50
+          type: string
+          description: Error catalog code.
+          example: "022"
+        type:
+          maximum: 100
+          type: string
+          description: Address where the error occurs.
+          example: /v1/name/pathSuffix
+    ErrorList:
+      properties:
+        message:
+          type: string
+          description: Message.
+          example: Bad Request
+        businessMessage:
+          type: string
+          description: Business error message.
+          example: The xyz field is mandatory
+    Error:
+      type: object
+      properties:
+        title:
+          maximum: 50
+          type: string
+          description: Technical error message.
+          example: Missing mandatory fields.
+        detail:
+          maximum: 50
+          type: string
+          description: Message to display to the client.
+          example: The input fields are not correct
+        instance:
+          maximum: 50
+          type: string
+          description: Error catalog code.
+          example: "022"
+        type:
+          maximum: 100
+          type: string
+          description: Address where the error occurs.
+          example: /v1/name/pathSuffix

@@ -1,0 +1,331 @@
+openapi: 3.0.0
+info:
+  title: API Servicio Cliente
+  description: Servicio de Cliente
+  termsOfService: https://www.google.com
+  contact:
+    email: edwinl_s@hotmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/msclient/v1
+    description: Generated server url
+tags:
+  - name: Client
+    description: Client
+paths:
+  /clientes:
+    get:
+      tags:
+        - Client
+      summary: Consultar listado de clientes activos
+      description: Consultar listado de clientes activos
+      operationId: consultarClientes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClienteDTO'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+    put:
+      tags:
+        - Client
+      summary: Actualizar cliente
+      description: Actualizar cliente
+      operationId: actualizarCliente
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Cliente
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ClienteDTO'
+        required: true
+      responses:
+        '200':
+          description: Updated
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '404':
+          description: Not Found
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+    post:
+      tags:
+        - Client
+      summary: Crear nuevo cliente
+      description: Crear nuevo cliente
+      operationId: crearCliente
+      requestBody:
+        description: Cliente
+        content:
+          application/json; charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ClienteDTO'
+        required: true
+      responses:
+        '201':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+
+  /clientes/{id}:
+    delete:
+      tags:
+        - Client
+      summary: Eliminar cliente por ID
+      description: Eliminar cliente por ID
+      operationId: eliminarCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+
+  /clientes/{identificacion}:
+    get:
+      tags:
+        - Client
+      summary: Consultar cliente por identificación
+      description: Consultar cliente por identificación
+      operationId: consultarClientePorIdentificacion
+      parameters:
+        - name: identificacion
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ClienteDTO'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+  /clientes/byid/{id}:
+    get:
+      tags:
+        - Client
+      summary: Consultar cliente por id
+      description: Consultar cliente por id
+      operationId: consultarXID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ClienteDTO'
+        '204':
+          description: No Content
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json; charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/RespuestaDTO'
+components:
+  schemas:
+    ClienteDTO:
+      required:
+        - id
+        - contrasenia
+        - identificacion
+      type: object
+      properties:
+        idclient:
+          type: integer
+        nombres:
+          type: string
+        genero:
+          type: string
+        edad:
+          type: integer
+          format: int32
+        identificacion:
+          type: string
+        direccion:
+          type: string
+        telefono:
+          type: string
+        contrasenia:
+          type: string
+        estado:
+          type: boolean
+      description: Modelo Canónico de Cliente
+    RespuestaDTO:
+      type: object
+      properties:
+        codigoRespuesta:
+          type: string
+        descripcion:
+          type: string
+      description: Modelo Canónico de Respuesta
+    ErrorBadRequest:
+      type: object
+      properties:
+        title:
+          maximum: 50
+          type: string
+          description: Technical error message.
+          example: Missing mandatory fields.
+        detail:
+          maximum: 50
+          type: string
+          description: Message to display to the client.
+          example: The input fields are not correct
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorList'
+        instance:
+          maximum: 50
+          type: string
+          description: Error catalog code.
+          example: "022"
+        type:
+          maximum: 100
+          type: string
+          description: Address where the error occurs.
+          example: /v1/name/pathSuffix
+    ErrorList:
+      properties:
+        message:
+          type: string
+          description: Message.
+          example: Bad Request
+        businessMessage:
+          type: string
+          description: Business error message.
+          example: The xyz field is mandatory
+    Error:
+      type: object
+      properties:
+        title:
+          maximum: 50
+          type: string
+          description: Technical error message.
+          example: Missing mandatory fields.
+        detail:
+          maximum: 50
+          type: string
+          description: Message to display to the client.
+          example: The input fields are not correct
+        instance:
+          maximum: 50
+          type: string
+          description: Error catalog code.
+          example: "022"
+        type:
+          maximum: 100
+          type: string
+          description: Address where the error occurs.
+          example: /v1/name/pathSuffix
