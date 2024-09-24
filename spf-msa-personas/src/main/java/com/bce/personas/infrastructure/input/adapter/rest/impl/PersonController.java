@@ -7,12 +7,14 @@ import com.bce.services.server.models.ClienteDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@RestController
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class PersonController implements ClientesApi {
@@ -61,4 +63,5 @@ public class PersonController implements ClientesApi {
         return clientService.deleteClientId(id)
                 .map(empty -> ResponseEntity.ok().build());
     }
+
 }

@@ -15,8 +15,6 @@ servers:
 tags:
   - name: Client
     description: Client
-  - name: Login
-    description: Login
 paths:
   /clientes:
     get:
@@ -196,7 +194,6 @@ paths:
             application/json; charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/RespuestaDTO'
-
   /clientes/byid/{id}:
     get:
       tags:
@@ -235,49 +232,6 @@ paths:
             application/json; charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/RespuestaDTO'
-
-  /users/login:
-    post:
-      tags:
-        - User
-      summary: Login
-      description: |
-        <h2> Details </h2>
-        Method to login using username and password.
-        <br>
-      operationId: PostUserLogin
-      requestBody:
-        content:
-          application/json;charset=UTF-8:
-            schema:
-              $ref: '#/components/schemas/PostUserLoginRequest'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json;charset=UTF-8:
-              schema:
-                $ref: '#/components/schemas/PostUserLoginResponse'
-        '204':
-          description: No Content
-          content:
-            application/json; charset=UTF-8:
-              schema:
-                $ref: '#/components/schemas/RespuestaDTO'
-        '400':
-          description: Bad Request
-          content:
-            application/json; charset=UTF-8:
-              schema:
-                $ref: '#/components/schemas/RespuestaDTO'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json; charset=UTF-8:
-              schema:
-                $ref: '#/components/schemas/RespuestaDTO'
-
 components:
   schemas:
     ClienteDTO:
@@ -315,37 +269,6 @@ components:
         descripcion:
           type: string
       description: Modelo Canónico de Respuesta
-    PostUserLoginRequest:
-      required:
-        - password
-        - username
-      type: object
-      properties:
-        username:
-          maxLength: 25
-          minLength: 4
-          type: string
-          description: Username
-          example: eleon
-        password:
-          maxLength: 25
-          minLength: 8
-          type: string
-          description: User's password
-          example: Password123#
-      description: Login request data
-    PostUserLoginResponse:
-      required:
-        - token
-      type: object
-      properties:
-        token:
-          maxLength: 8192
-          type: string
-          description: Authentication token
-          example: eyJhbGciOiJIUzI1NiIsImtpZCI6IkNCVjFCWUNheFRuTFFFODFhTWwxX29hN3VzVmlENjBjX0RCcHdLQWd1anMiLCJ0eXAiOiJKV1QifQ.eyJhbGciOiJIUzI1NiIsImtpZCI6IkNCVjFCWUNheFRuTFFFODFhTWwxX29hN3VzVmlENjBjX0RCcHdLQWd1anMiLCJ0eXAiOiJKV1QifQ.eyJhbGciOiJIUzI1NiIsImtpZCI6IkNCVjFCWUNheFRuTFFFODFhTWwxX29hN3VzVmlENjBjX0RCcHdLQWd1anMiLCJ0eXAiOiJKV1QifQ
-      description: Login response
-
     ErrorBadRequest:
       type: object
       properties:
